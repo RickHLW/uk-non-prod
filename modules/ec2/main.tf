@@ -27,7 +27,7 @@ resource "aws_key_pair" "my_instance_key_pair" {
 resource "aws_instance" "EC2" {
   ami           = data.aws_ami.amazon.id
   instance_type = "t2.micro"
-  associate_public_ip_address = true 
+  associate_public_ip_address = false 
  
   subnet_id = var.subnet_used
   vpc_security_group_ids = var.sg_used

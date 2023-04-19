@@ -20,7 +20,7 @@ variable "sg_name" {
 
 variable "public_subnet_cidr_blocks" {
   description = "list of subnet in the VPC"
-  default = ["10.0.1.0/24","10.0.2.0/24"]
+  default = ["192.168.10.0/24","192.168.11.0/24"]
 }
 
 variable "service_ports" {
@@ -42,5 +42,5 @@ output "sgid" {
 }
 
 output "vpcid"{
-  value = "${aws_vpc.vpc01.id}"
+  value = "${aws_vpc.para_PoC_vpc01.id}"
 }

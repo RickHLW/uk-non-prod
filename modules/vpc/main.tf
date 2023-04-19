@@ -1,5 +1,5 @@
-resource "aws_vpc" "vpc01" {
-  cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "para_PoC_vpc01" {
+  cidr_block = "192.168.0.0/16"
   
   tags = {
     Name = var.project_name
@@ -13,7 +13,7 @@ data "aws_availability_zones" "azs" {
 
 
 resource "aws_subnet" "subnet01" {
-  vpc_id     = aws_vpc.vpc01.id
+  vpc_id     = aws_vpc.para_PoC_vpc01.id
   count = length(var.public_subnet_cidr_blocks)
   availability_zone = element(data.aws_availability_zones.azs.names, count.index)
   cidr_block = var.public_subnet_cidr_blocks[count.index]
@@ -25,7 +25,7 @@ resource "aws_subnet" "subnet01" {
 
 resource "aws_security_group" "sg" {
   name = var.sg_name
-  vpc_id = aws_vpc.vpc01.id
+  vpc_id = aws_vpc.para_PoC_vpc01.id
 
   /*
   ingress {
@@ -61,14 +61,14 @@ resource "aws_security_group" "sg" {
 
 
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.vpc01.id
+  vpc_id = aws_vpc.para_PoC_vpc01.id
 
   tags = {
     Name = var.project_name
   }
 }
 resource "aws_route_table" "my_public_route_table" {
-    vpc_id = aws_vpc.vpc01.id
+    vpc_id = aws_vpc.para_PoC_vpc01.id
     route {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.gw.id
